@@ -3,8 +3,8 @@ const assets = [
   "/",
   "/index.html",
   "/assest/js/app.js",
-  "/assest/js/style.css",
-  "/assest/js/app.js",
+  // "/assest/js/style.css",
+  "/assest/css/style.css",
 
 ]
 
