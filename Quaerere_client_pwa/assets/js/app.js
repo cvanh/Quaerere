@@ -17,10 +17,3 @@ function menu() {
   }
 }
 
-function json_parse(guid){
-  $.getJSON('http://localhost/skrot_server/?guid=a61f07a3-d13c-4df8-bc51-9950a181513d', function(data) {
-    // JSON result in `data` variable
-    console.log()
-});
-}
-json_parse()

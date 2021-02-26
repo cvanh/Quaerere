@@ -1,10 +1,11 @@
-
 <?php
 require './database.php';
 OpenCon();
+$guid = $_GET['guid'];
 
-$sql = "SELECT * FROM `skrot` where id=1";
+$sql = "SELECT * FROM `skrot` WHERE id='". $guid ."'" ;
 $result = $conn->query($sql);
+// print_r($sql);
 
 if ($result->num_rows > 0){
     while($row = $result->fetch_assoc()){
@@ -17,11 +18,11 @@ if ($result->num_rows > 0){
         $whatsapp = $row['whatsapp'];
         
         $json = array(
-            "id:"=> $id,
-            "name:"=>$name,
-            "instagram:"=>$instagram,
-            "snapchat:"=>$snapchat,
-            "whatsapp:"=>$whatsapp
+            "id"=> $id,
+            "name"=>$name,
+            "instagram"=>$instagram,
+            "snapchat"=>$snapchat,
+            "whatsapp"=>$whatsapp
         );
         echo json_encode($json, JSON_PRETTY_PRINT);
     }
