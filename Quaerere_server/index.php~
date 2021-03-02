@@ -24,7 +24,7 @@ if ($result->num_rows > 0){
             "snapchat"=>$snapchat,
             "whatsapp"=>$whatsapp
         );
-        echo json_encode($json, JSON_PRETTY_PRINT);
+        echo json_encode($json);
     }
 }else{
     echo "did you chose the right user?";

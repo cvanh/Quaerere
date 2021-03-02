@@ -1,0 +1,75 @@
+let json_data_raw = "";
+let guid = '4347263d-c647-43c0-af24-9c12defbba54';
+function json_fetch(guid) {
+  let json_data_raw = jQuery.getJSON(
+    "http://localhost/Quaerere/Quaerere_server/?guid=" + guid,function (data) {
+      // builds the request with the supplied guid
+      // JSON result in `data` variable
+     
+      console.log("de functie zegt: "+ json_data_raw.responseJSON)
+      
+    }
+  );
+}
+
+async function json_parse(guid) {
+  
+  let json = await json_fetch(guid);
+  console.log(json.responseJSON);
+}
+
+json_parse(guid); // a example to parse a specific user
+
+
+// let socials = document.getElementById('socials'); // fetches the div with all the social media
+// switch(json_data.responseJSON = undefined){
+//   case 1:
+//     json_data.responseJSON.whatsapp != undefined
+//     console.log("de gebruiker heeft whatsapp")
+// }
+----------------------
+// let json_fetch = () =>{
+//   let temp = await jQuery.getJSON("http://localhost/Quaerere/Quaerere_server/?guid=" + guid); //doe je globale const gewoon gelijk aan je resultaat
+//   const result = temp
+// }
+
+
+      let whatsapp = document.getElementById('whatsapp_child') // this makes a child to give the social media tag to 
+      whatsapp.innerHTML = result.whatsapp; // this will insert the social media in de page
+      document.getElementById('whatsapp_parent').style.display = 'block' // this makes it visible becuase the defualt is display: none; this is in case the user didnt sumbit this spefic social media
+-------------
+<div id="name_parent" class="option" style="display: none;">
+                <div class="photo_option">
+                    <img height='50px' width="50px" src="../assets/images/img/photo.png" alt="foto">
+                </div>
+                <div id="name_child"></div>
+            </div>
+        </a>
+        <a href="#">
+            <div id='whatsapp_parent' class="option" style="display: none;">
+                <div class="photo_option">
+                    <img height='50px' width="50px" src="../assets/images/img/photo.png" alt="foto">
+                </div>
+                <div id="whatsapp_child"></div>
+            </div>
+        </a>
+        <a href="#">
+            <div id="instagram_parent" class="option" style="display: none;">
+                <div class="photo_option">
+                    <img height='50px' width="44px" src="../assets/images/img/instagram.png" alt="foto">
+                </div>
+                <div id="instagram_child"></div>
+            </div>
+        </a>
+
+        <a href="#">
+            <div id="snapchat_parent" class="option" style="display: none;">
+                <div class="photo_option">
+                    <img height='44px' width="44px" src="../assets/images/img/snapchat.png" alt="foto">
+                </div>
+                <div id="snapchat_child"></div>
+            </div>
+        </a></div>
+
+        -----
+document.write("<a href='#'><div id='snapchat_parent' class='option' style='display: none;'><div class='photo_option'><img height='44px' width='44px' src='../assets/images/img/snapchat.png' alt='foto'></div><div id='snapchat_child'></div></div></a></div>")
