@@ -4,6 +4,7 @@ let result = null;
 let json_data_globale = null;
 let socials = document.getElementsByClassName('option');
 
+
 // function json_fill() {
 //   // console.log(result.id);
 //   switch (result != null) { // okay listen up im gonna explain this once
@@ -32,12 +33,11 @@ let socials = document.getElementsByClassName('option');
 //       // ^^^^ this will be displayed the moment there is no json response
 //   }
 // }
-
 function json_fill(){
   console.log('shite');
-//  for (let index = 0; index < socials.length; index++) {
-  const option = <h1>hello {result.name}</h1>
-//}
+ for (let index = 0; index < socials.length; index++) {
+  console.log("sss")
+}
 }
 
 async function json_parse() {

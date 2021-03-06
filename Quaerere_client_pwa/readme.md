@@ -5,6 +5,4 @@ the menu contains:
     home
     store
 
-
-
     https://whatwebcando.today/nfc.html

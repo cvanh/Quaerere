@@ -1,15 +1,13 @@
-export default function json_fill() {
+import * as React from "react";
+import { View, Text } from "react-native";
+export const JsonFill = () => {
     return (
       <View
         style={{
           backgroundColor: 'green',
         }}
       >
-        <div id="menu">
-          <a href="#news">News</a>
-          <a href="#contact">Contact</a>
-          <a href="#about">About</a>
-        </div>
+        <div>asdasd</div>
       </View>
     );
   }

@@ -69,11 +69,9 @@ var socials = document.getElementsByClassName('option');
 // }
 function json_fill() {
     console.log('shite');
-    //  for (let index = 0; index < socials.length; index++) {
-    var option = React.createElement("h1", null,
-        "hello ",
-        result.name);
-    //}
+    for (var index = 0; index < socials.length; index++) {
+        console.log("sss");
+    }
 }
 function json_parse() {
     return __awaiter(this, void 0, void 0, function () {
