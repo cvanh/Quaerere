@@ -1,32 +1,17 @@
 import * as React from "react";
+// import {render} from "react-native";
+import './assets/css/base.css'; //imports css from styled-components
 import { View, Text } from "react-native";
-import './assets/css/base.css';
-import {MenuToggle} from '/assets/js/script.js';
-import {JsonFill} from './assets/js/components.js'
+import {JsonFill, menu} 
+from './assets/js/components.js' // Jsonfill fetches from data base and then displays it
+import {JsonParse} from './assets/js/script.js' 
 
-export default function menu() {
-  return (
-    <View
-      style={{
-        backgroundColor: 'green',
-      }}
-    >
-      <div id="menu_knop" style={{display: "none"}}>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-      </div>
-    </View>,
-    <View>
-      <a href='#' onClick={MenuToggle}>
-        menubutton
-        </a>
-    </View>
-  );
+export default function Main() {
+  return(<Text>text</Text>)
 }
-
-
-
-menu();
-JsonFill();
-MenuToggle();
+JsonParse('11a61a61-18ce-4037-8e3a-2f992e72a751');
+// App();
+// menu();
+// JsonFill();
+// MenuToggle();
+// ReactDOM.render(menu, document.getElementById('root'));

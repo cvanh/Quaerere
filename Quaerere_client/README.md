@@ -4,3 +4,5 @@ flashing option(alternative for non compatible devices)
     acount
     home
     store
+
+    https://reactnavigation.org/docs/stack-navigator/
