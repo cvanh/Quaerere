@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { View, Text } from "react-native";
-import './script.js'
+import {MenuToggle} from './script.js'
 // export const JsonFill = () => {
 //   render();
 //     return (
@@ -26,23 +26,17 @@ export const JsonFill = () =>(
 //     );
 
 //   }
-// export const menu = () => {
-  // return (
-  //   <View
-  //     style={{
-  //       backgroundColor: 'green',
-  //     }}
-  //   >
-  //     <div id="menu_knop" style={{display: "none"}}>
-  //       <a href="#news">News</a>
-  //       <a href="#contact">Contact</a>
-  //       <a href="#about">About</a>
-  //     </div>
-  //   </View>,
-  //   <View>
-  //     <a href='#' onClick={MenuToggle}>
-  //       menubutton
-  //       </a>
-  //   </View>
-  // );
-// }
+export const menu = () => (
+    <View>
+      <div id="menu_knop" style={{display: "none"}}>
+        <a href="#news">News</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+      </div>
+    </View>,
+    <View>
+      <a href='#' onClick={MenuToggle}>
+        menubutton
+        </a>
+    </View>
+  );
