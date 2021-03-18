@@ -35,6 +35,13 @@ async function json_parse(url = '', data = {}) {
 //   // console.info("dit is uit de funtie: " + result);
 //   // json_fill();
 // }
+
+// async function json_parse(guid) { // not intended for direct calls, this fetches the object and calls the json_fill with the object 
+httpClient(`${apiUrl}/Location`, {
+  method: 'GET',
+  body: JSON.stringify(params.data),
+})
+// }
 export const JsonParse = (guid) => {
   let UserIdUrl = 'http://localhost/Quaerere/Quaerere_server/?guid=' + guid
   json_parse(UserIdUrl);
