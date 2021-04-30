@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "expo": "^40.0.1"
+    "expo": "^40.0.1",
+    "react-router-native": "^5.2.0"
   },
   "devDependencies": {
     "@types/react": "~16.9.35",
