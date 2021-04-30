@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, AppRegistry } from "react-native";
 import { NativeRouter, Route, Link } from "react-router-native";
-import {overview_card} from './components.js';
+// import {overview_card} from './components.js';
 
 
 
 // dit wordt de pagina's zelf
+
 const Home = () => <Text style={styles.header}>hou de ntag21x kaart voor de telefoon</Text>; 
 
 const overview = () => <Text style={styles.header}>overview page</Text>;

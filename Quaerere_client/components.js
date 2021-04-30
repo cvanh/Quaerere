@@ -4,10 +4,12 @@ const overview_card = () =>{
     return(
         <View>
             style={{
-                width: "50%"
+                width: "50%",
+                backgroundColor: "#61dafb"
+
             }}
             <Text>card</Text>
         </View>
     )
 }
-export default overview_card;
+export default overview_card();
