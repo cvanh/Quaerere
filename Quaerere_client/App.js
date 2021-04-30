@@ -1,1 +1,1 @@
-alert('er is iets gedaan')
+console.log('shit happend')

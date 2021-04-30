@@ -3,7 +3,7 @@
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
-    "expo": "^1.0.0",
+    "expo": "^40.0.0",
     "jquery": "^3.6.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
