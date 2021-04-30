@@ -1,53 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, AppRegistry } from "react-native";
-
 import { NativeRouter, Route, Link } from "react-router-native";
+import {overview_card} from './components.js';
 
-const Home = () => <Text style={styles.header}>Home</Text>;
 
-const About = () => <Text style={styles.header}>About</Text>;
 
-const Topic = ({ match }) => (
-  <Text style={styles.topic}>{match.params.topicId}</Text>
-);
+// dit wordt de pagina's zelf
+const Home = () => <Text style={styles.header}>hou de ntag21x kaart voor de telefoon</Text>; 
 
-const Topics = ({ match }) => (
-  <View>
-    <Text style={styles.header}>Topics</Text>
-    <View>
-      <Link
-        to={`${match.url}/rendering`}
-        style={styles.subNavItem}
-        underlayColor="#f0f4f7"
-      >
-        <Text>Rendering with React</Text>
-      </Link>
-      <Link
-        to={`${match.url}/components`}
-        style={styles.subNavItem}
-        underlayColor="#f0f4f7"
-      >
-        <Text>Components</Text>
-      </Link>
-      <Link
-        to={`${match.url}/props-v-state`}
-        style={styles.subNavItem}
-        underlayColor="#f0f4f7"
-      >
-        <Text>Props v. State</Text>
-      </Link>
-    </View>
-
-    <Route path={`${match.path}/:topicId`} component={Topic} />
-    <Route
-      exact
-      path={match.path}
-      render={() => (
-        <Text style={styles.topic}>Please select a topic.</Text>
-      )}
-    />
-  </View>
-);
+const overview = () => <Text style={styles.header}>overview page</Text>;
 
 const App = () => (
   <NativeRouter>
@@ -57,35 +18,30 @@ const App = () => (
           <Text>Home</Text>
         </Link>
         <Link
-          to="/about"
+          to="/overview"
           underlayColor="#f0f4f7"
           style={styles.navItem}
         >
-          <Text>About</Text>
-        </Link>
-        <Link
-          to="/topics"
-          underlayColor="#f0f4f7"
-          style={styles.navItem}
-        >
-          <Text>Topics</Text>
+          <Text>overview</Text>
         </Link>
       </View>
 
       <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/topics" component={Topics} />
+      <Route path="/overview" component={overview} />
     </View>
   </NativeRouter>
 );
 
+
+// styles
 const styles = StyleSheet.create({
   container: {
     marginTop: 25,
     padding: 10
   },
   header: {
-    fontSize: 20
+    fontSize: 20,
+    textAlign: "center",
   },
   nav: {
     flexDirection: "row",
@@ -105,4 +61,4 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent("main", () => App);
+AppRegistry.registerComponent("main", () => App); 
