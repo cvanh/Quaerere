@@ -31,13 +31,13 @@
     "styled-components": "^5"
   },
   "private": true,
-  
   "web": {
     "build": {
       "babel": {
-        "include": ["galio-framework"]
+        "include": [
+          "galio-framework"
+        ]
       }
     }
   }
 }
-
