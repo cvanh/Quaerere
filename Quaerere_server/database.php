@@ -2,8 +2,8 @@
 function OpenCon()
  {
  $dbhost = "localhost";
- $dbuser = "cvanh";
- $dbpass = "XJeuLU75Vp2EZbM";
+ $dbuser = "root";
+ $dbpass = "123456";
  $db = "skrot";
 
   global $conn;

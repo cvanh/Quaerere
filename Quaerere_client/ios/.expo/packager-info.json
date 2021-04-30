@@ -1,0 +1,9 @@
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+  "webpackServerPort": 19006,
+  "expoServerNgrokUrl": "https://ex-5fv.anonymous.ios.exp.direct",
+  "packagerNgrokUrl": "https://packager.ex-5fv.anonymous.ios.exp.direct",
+  "ngrokPid": 7576
+}
