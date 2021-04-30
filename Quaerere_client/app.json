@@ -1,0 +1,20 @@
+{
+  "name": "quaerere",
+  "displayName": "quaerere",
+  "expo": {
+    "name": "quaerere",
+    "slug": "quaerere",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "web": {
+      "build": {
+        "babel": {
+          "include": ["react-router-native",
+            "galio-framework"]
+        }
+      }
+    }
+  }
+}
