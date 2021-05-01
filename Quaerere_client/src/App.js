@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
+import firebase from "./firebase/config.js";
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -18,12 +19,35 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const usersRef = firebase.database().ref("users");
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        addListener(user);
+      } else {
+        setLoading(false);
+      }
+    });
+  }, []);
+  const addListener = async (user) => {
+    const id = user.uid;
+    firebase
+      .database()
+      .ref(`users/${id}`)
+      .on("value", (snapshot) => {
+        console.log(snapshot.val())
+        if (snapshot.val()) {
+          setUser(snapshot.val());
+          setLoading(false);
+        }
+      });
+  };
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
           <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
+            {(props) => <HomeScreen {...props} user={user} />}
           </Stack.Screen>
         ) : (
           <>
