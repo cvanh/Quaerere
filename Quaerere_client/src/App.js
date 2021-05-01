@@ -81,7 +81,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {user ? (
-          <Stack.Screen name="Home" component={HomeTabs} />
+          <Stack.Screen name="App" component={HomeTabs} />
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />

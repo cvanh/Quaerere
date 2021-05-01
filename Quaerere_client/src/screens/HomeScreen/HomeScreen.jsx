@@ -4,7 +4,6 @@ import styles from "./styles";
 import firebase from "../../firebase/config.js";
 
 export default function HomeScreen(user) {
-  console.log(user)
   const signOut = () => {
     firebase
       .auth()
