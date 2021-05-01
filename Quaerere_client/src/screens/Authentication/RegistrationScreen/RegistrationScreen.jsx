@@ -25,6 +25,7 @@ export default function RegistrationScreen({ navigation }) {
       email: email,
       password: password,
       saveUser: saveUser,
+      photoURL: `http://gravatar.com/avatar/${md5(email)}?d=identicon`,
     });
   };
   const saveUser = (createdUser) => {
@@ -33,6 +34,7 @@ export default function RegistrationScreen({ navigation }) {
       email: createdUser.user.email,
       name: createdUser.user.displayName,
       id: createdUser.user.uid,
+      avatar: createdUser.user.photoURL,
     });
   };
   return (
