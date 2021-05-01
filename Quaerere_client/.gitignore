@@ -2,6 +2,11 @@
 #
 .DS_Store
 
+#belangrijke dingen
+firebase.js
+config.js
+GoogleService-Info.*
+
 # Xcode
 #
 build/
