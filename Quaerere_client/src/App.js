@@ -46,7 +46,7 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} />}
+            {(props) => <HomeScreen {...user} />}
           </Stack.Screen>
         ) : (
           <>
