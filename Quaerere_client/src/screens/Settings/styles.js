@@ -6,9 +6,6 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  boldText:{
-    fontWeight:"bold",
-  },
   footerView: {
     flex: 1,
     alignItems: "center",

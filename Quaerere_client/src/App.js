@@ -4,10 +4,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
+import Settings from "./screens/Settings/Setting.jsx";
 import { View, Text } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
 import firebase from "./firebase/config.js";
+import Ionicons from "@expo/vector-icons/Ionicons";
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -47,10 +49,31 @@ export default function App() {
         }
       });
   };
+
   const HomeTabs = () => {
     return (
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = focused
+                ? "ios-information-circle"
+                : "ios-information-circle-outline";
+            } else if (route.name === "Settings") {
+              iconName = focused ? "ios-list" : "ios-list";
+            }
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "tomato",
+          inactiveTintColor: "gray",
+        }}
+      >
         <Tab.Screen name="Home" children={() => <HomeScreen {...user} />} />
+        <Tab.Screen name="Settings" children={() => <Settings {...user} />} />
       </Tab.Navigator>
     );
   };
