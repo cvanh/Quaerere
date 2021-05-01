@@ -35,7 +35,6 @@ export default function App() {
       .database()
       .ref(`users/${id}`)
       .on("value", (snapshot) => {
-        console.log(snapshot.val())
         if (snapshot.val()) {
           setUser(snapshot.val());
           setLoading(false);
@@ -47,7 +46,7 @@ export default function App() {
       <Stack.Navigator>
         {user ? (
           <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} user={user} />}
+            {(props) => <HomeScreen {...props} />}
           </Stack.Screen>
         ) : (
           <>
