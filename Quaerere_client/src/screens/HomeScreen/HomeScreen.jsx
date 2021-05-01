@@ -1,10 +1,13 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React from "react";
+import { Text, View } from "react-native";
 
 export default function HomeScreen(props) {
-    return (
-        <View>
-            <Text>Home Screen</Text>
-        </View>
-    )
+  const user = props.user;
+  console.log(user);
+  return (
+    <View>
+      <Text>username = {user.name}</Text>
+      <Text>user email = {user.email} </Text>
+    </View>
+  );
 }

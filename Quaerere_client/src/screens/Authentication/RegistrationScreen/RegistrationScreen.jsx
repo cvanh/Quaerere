@@ -30,8 +30,8 @@ export default function RegistrationScreen({ navigation }) {
   const saveUser = (createdUser) => {
     const usersRef = firebase.database().ref("users");
     return usersRef.child(createdUser.user.uid).set({
+      email: createdUser.user.email,
       name: createdUser.user.displayName,
-      avatar: createdUser.user.photoURL,
       id: createdUser.user.uid,
     });
   };

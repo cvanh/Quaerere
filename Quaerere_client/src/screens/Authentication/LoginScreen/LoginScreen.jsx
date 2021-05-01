@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-
+import { LoginUser } from "../Functions/login.js";
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +11,9 @@ export default function LoginScreen({ navigation }) {
     navigation.navigate("Registration");
   };
 
-  const onLoginPress = () => {};
+  const onLoginPress = () => {
+    LoginUser(email, password);
+  };
 
   return (
     <View style={styles.container}>
@@ -21,7 +23,7 @@ export default function LoginScreen({ navigation }) {
       >
         <TextInput
           style={styles.input}
-          placeHolder="e-mail"
+          placeholder="E-mail"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEmail(text)}
           value={email}
@@ -39,13 +41,13 @@ export default function LoginScreen({ navigation }) {
           autoCapitalize="none"
         />
         <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Text style={styles.buttonTitle}>Login</Text>
+          <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
         <View style={styles.footerView}>
-          <Text styles={styles.footerText}>
+          <Text style={styles.footerText}>
             Don't have an account?{" "}
-            <Text onPress={onFooterLinkPress()} style={styles.footerLink}>
-              Sign up!
+            <Text onPress={onFooterLinkPress} style={styles.footerLink}>
+              Sign up
             </Text>
           </Text>
         </View>

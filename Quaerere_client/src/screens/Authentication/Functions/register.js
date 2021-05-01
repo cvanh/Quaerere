@@ -8,6 +8,7 @@ export const createNewUser = (props) => {
       createdUser.user
         .updateProfile({
           displayName: props.fullName,
+          email:props.email,
         })
         .then(() => {
           props.saveUser(createdUser);
