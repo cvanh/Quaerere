@@ -1,68 +1,57 @@
-import React, { useState } from "react";
-import { Text, View, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Image, Platform, Button } from "react-native";
 import styles from "./styles";
 import { Avatar } from "react-native-elements";
 import firebase from "../../firebase/config.js";
-import AvatarEditor from "react-avatar-editor";
 import AvatarPicker from "./Avatar/Avatar.jsx";
-import { launchImageLibrary } from "react-native-image-picker";
+import * as ImagePicker from "expo-image-picker";
 export default function Settings(user) {
   const [avatar, setAvatar] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
   const [croppedImage, setCroppedImage] = useState("");
   const [uploadedCroppedImage, setUploadedCroppedImage] = useState("");
   const [blob, setBlob] = useState(null);
+  const [uploadedUri, setUploadedUri] = useState("");
   const metadata = {
     contentType: "image/png",
   };
-  let usersRef = firebase.database().ref("users");
   const storageRef = firebase.storage().ref();
 
-  const handleChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.addEventListener("load", () => {
-        setPreviewImage(reader.result);
-      });
-    }
-  };
-  const handleChoosePhoto = () => {
-    const options = {
-      mediaType: "photo",
-      maxWidth: 300,
-      quality: 1,
-    };
-    console.log("uyes");
-
-    launchImageLibrary(options, (response) => {
-      console.log(response);
-      if (response.didCancel) {
-        alert("User cancelled camera picker");
-        return;
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
       }
+    })();
+  }, []);
+
+  const handleImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      quality: 1,
     });
-  };
-  const handleCropImage = () => {
-    if (avatarEditor) {
-      avatarEditor.getImageScaledToCanvas().toBlob((blob) => {
-        let imageUrl = URL.createObjectURL(blob);
-        setCroppedImage(imageUrl);
-        setBlob(blob);
-      });
+
+    if (!result.cancelled) {
+      await setCroppedImage(result.uri);
+      uploadCroppedImage();
     }
   };
-
-  const uploadCroppedImage = () => {
-    storageRef
+  const uploadCroppedImage = async (mime = "application/octet-stream") => {
+    const name = "profile" + user.id;
+    console.log(croppedImage);
+    firebase
+      .storage()
+      .ref("image")
       .child(`avatars/users/${user.id}`)
-      .put(blob, metadata)
+      .put(croppedImage, mime)
       .then((snap) => {
-        snap.ref.getDownloadURL().then((downloadurl) => {
-          setUploadedCroppedImage(downloadurl, () => {
-            changeAvatar();
-          });
+        snap.ref.getDownloadURL().then(async (url) => {
+          console.log(url);
+          await setUploadedCroppedImage(url);
         });
       });
   };
@@ -73,41 +62,44 @@ export default function Settings(user) {
       .then(() => alert("successfully signed out!"));
   };
 
-  const changeAvatar = () => {
-    usersRef
-      .updateProfile({ photoURL: uploadedCroppedImage })
+  const changeAvatar = async () => {
+    console.log(uploadedCroppedImage);
+    await firebase
+      .database()
+      .ref(`users/${user.id}`)
+      .set({
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        avatar: uploadedCroppedImage,
+      })
       .then(() => {
-        console.log("avatar updated!");
-        setAvatar(false);
+        console.log(user.avatar);
       })
       .catch((e) => {
         console.error(e);
       });
   };
-  const setAvatarEditor = (node) => {
-    console.log(node);
-  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.bold}>Welcome {user.name}</Text>
       <Text style={styles.marginTop}>Avatar:</Text>
       <Avatar
         size="large"
-        onPress={() => handleChoosePhoto()}
-        source={{ uri: user.avatar }}
+        onPress={() => handleImage()}
+        source={{ uri: croppedImage || user.avatar }}
       >
         <Avatar.Accessory size={20} />
       </Avatar>
-      {avatar === true && (
-        <AvatarPicker
-          handleChange={handleChange}
-          previewImage={previewImage}
-          handleCropImage={handleCropImage}
-          croppedImage={croppedImage}
-          uploadCroppedImage={uploadCroppedImage}
-          setAvatarEditor={setAvatarEditor}
+      {croppedImage && (
+        <Button
+          title="Save avatar?"
+          onPress={() => changeAvatar()}
+          style={styles.saveAvatar}
         />
       )}
+
       <Text style={styles.marginTop}>Username:</Text>
       <Text style={[styles.bold, styles.marginTop]}>{user.name}</Text>
 

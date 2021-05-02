@@ -17,6 +17,11 @@ export default StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
+  saveAvatar:{
+    marginTop:"2%",
+    fontSize:12,
+    color:"blue",
+  },
   footerView: {
     flex: 1,
     alignItems: "center",
