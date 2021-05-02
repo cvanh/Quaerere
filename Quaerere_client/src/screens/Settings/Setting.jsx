@@ -3,8 +3,8 @@ import { Text, View, Image, Platform, Button } from "react-native";
 import styles from "./styles";
 import { Avatar } from "react-native-elements";
 import firebase from "../../firebase/config.js";
-import AvatarPicker from "./Avatar/Avatar.jsx";
 import * as ImagePicker from "expo-image-picker";
+import storage from "@react-native-firebase/storage";
 export default function Settings(user) {
   const [avatar, setAvatar] = useState(false);
   const [croppedImage, setCroppedImage] = useState("");
@@ -36,24 +36,20 @@ export default function Settings(user) {
     });
 
     if (!result.cancelled) {
-      await setCroppedImage(result.uri);
+      await setCroppedImage(result);
       uploadCroppedImage();
     }
   };
   const uploadCroppedImage = async (mime = "application/octet-stream") => {
-    const name = "profile" + user.id;
-    console.log(croppedImage);
-    firebase
-      .storage()
-      .ref("image")
-      .child(`avatars/users/${user.id}`)
-      .put(croppedImage, mime)
-      .then((snap) => {
-        snap.ref.getDownloadURL().then(async (url) => {
-          console.log(url);
-          await setUploadedCroppedImage(url);
-        });
-      });
+    const uri = croppedImage?.uri;
+    let uploadUri = Platform.OS === "ios" ? uri.replace("file://", "") : uri;
+    console.log(uploadUri);
+    const task = storage().ref().putFile(uploadUri);
+    try {
+      await task;
+    } catch (e) {
+      console.error(e);
+    }
   };
   const signOut = () => {
     firebase
@@ -88,11 +84,11 @@ export default function Settings(user) {
       <Avatar
         size="large"
         onPress={() => handleImage()}
-        source={{ uri: croppedImage || user.avatar }}
+        source={{ uri: croppedImage.uri || user.avatar }}
       >
         <Avatar.Accessory size={20} />
       </Avatar>
-      {croppedImage && (
+      {croppedImage.uri && (
         <Button
           title="Save avatar?"
           onPress={() => changeAvatar()}
