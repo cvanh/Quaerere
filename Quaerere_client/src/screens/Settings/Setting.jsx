@@ -3,6 +3,9 @@ import { Text, View, Image } from "react-native";
 import styles from "./styles";
 import { Avatar } from "react-native-elements";
 import firebase from "../../firebase/config.js";
+import AvatarEditor from "react-avatar-editor";
+import AvatarPicker from "./Avatar/Avatar.jsx";
+import { launchImageLibrary } from "react-native-image-picker";
 export default function Settings(user) {
   const [avatar, setAvatar] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -12,7 +15,7 @@ export default function Settings(user) {
   const metadata = {
     contentType: "image/png",
   };
-  const usersRef = firebase.database().ref("users");
+  let usersRef = firebase.database().ref("users");
   const storageRef = firebase.storage().ref();
 
   const handleChange = (event) => {
@@ -25,7 +28,22 @@ export default function Settings(user) {
       });
     }
   };
+  const handleChoosePhoto = () => {
+    const options = {
+      mediaType: "photo",
+      maxWidth: 300,
+      quality: 1,
+    };
+    console.log("uyes");
 
+    launchImageLibrary(options, (response) => {
+      console.log(response);
+      if (response.didCancel) {
+        alert("User cancelled camera picker");
+        return;
+      }
+    });
+  };
   const handleCropImage = () => {
     if (avatarEditor) {
       avatarEditor.getImageScaledToCanvas().toBlob((blob) => {
@@ -66,19 +84,30 @@ export default function Settings(user) {
         console.error(e);
       });
   };
-
+  const setAvatarEditor = (node) => {
+    console.log(node);
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.bold}>Welcome {user.name}</Text>
       <Text style={styles.marginTop}>Avatar:</Text>
       <Avatar
         size="large"
-        onPress={() => changeAvatar()}
+        onPress={() => handleChoosePhoto()}
         source={{ uri: user.avatar }}
       >
         <Avatar.Accessory size={20} />
       </Avatar>
-
+      {avatar === true && (
+        <AvatarPicker
+          handleChange={handleChange}
+          previewImage={previewImage}
+          handleCropImage={handleCropImage}
+          croppedImage={croppedImage}
+          uploadCroppedImage={uploadCroppedImage}
+          setAvatarEditor={setAvatarEditor}
+        />
+      )}
       <Text style={styles.marginTop}>Username:</Text>
       <Text style={[styles.bold, styles.marginTop]}>{user.name}</Text>
 
