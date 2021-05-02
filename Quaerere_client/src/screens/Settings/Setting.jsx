@@ -89,6 +89,7 @@ export default function Settings(user) {
       id: user.id,
       avatar: uploadedCroppedImage,
     });
+    setCroppedImage(null);
   };
 
   return (
