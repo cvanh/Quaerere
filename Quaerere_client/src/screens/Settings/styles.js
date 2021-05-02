@@ -2,9 +2,20 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    marginTop: "25%",
     flex: 1,
     alignItems: "center",
+    marginTop: "15%",
+  },
+  welcome: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  marginTop: {
+    marginTop: "5%",
+  },
+  bold: {
+    fontWeight: "bold",
+    fontSize: 18,
   },
   footerView: {
     flex: 1,
@@ -19,5 +30,10 @@ export default StyleSheet.create({
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  userAvatar: {
+    borderRadius: 50,
+    height: "30%",
+    width: "30%",
   },
 });
