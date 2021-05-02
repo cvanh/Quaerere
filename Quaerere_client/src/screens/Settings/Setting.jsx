@@ -4,9 +4,8 @@ import styles from "./styles";
 import { Avatar } from "react-native-elements";
 import firebase from "../../firebase/config.js";
 import * as ImagePicker from "expo-image-picker";
-import storage from "@react-native-firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 export default function Settings(user) {
-  const [avatar, setAvatar] = useState(false);
   const [croppedImage, setCroppedImage] = useState("");
   const [uploadedCroppedImage, setUploadedCroppedImage] = useState("");
   const [blob, setBlob] = useState(null);
@@ -29,28 +28,53 @@ export default function Settings(user) {
     })();
   }, []);
 
-  const handleImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      quality: 1,
+  const pickImage = async () => {
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
     });
-
-    if (!result.cancelled) {
-      await setCroppedImage(result);
-      uploadCroppedImage();
-    }
+    await handleImagePicked(pickerResult);
   };
-  const uploadCroppedImage = async (mime = "application/octet-stream") => {
-    const uri = croppedImage?.uri;
-    let uploadUri = Platform.OS === "ios" ? uri.replace("file://", "") : uri;
-    console.log(uploadUri);
-    const task = storage().ref().putFile(uploadUri);
+
+  const handleImagePicked = async (pickerResult) => {
     try {
-      await task;
+      if (!pickerResult.cancelled) {
+        const uploadUrl = await uploadImageAsync(pickerResult.uri);
+        setCroppedImage(pickerResult);
+      }
     } catch (e) {
       console.error(e);
+    } finally {
+      console.log("image picked epic ");
     }
   };
+
+  const uploadImageAsync = async (uri) => {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function (e) {
+        console.log(e);
+        reject(new TypeError("network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", uri, true);
+      xhr.send(null);
+    });
+    await storageRef
+      .child(uuidv4())
+      .put(blob)
+      .then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadurl) => {
+          setUploadedCroppedImage(downloadurl);
+          console.log("set cropped image");
+        });
+      });
+    blob.close();
+  };
+
   const signOut = () => {
     firebase
       .auth()
@@ -59,22 +83,12 @@ export default function Settings(user) {
   };
 
   const changeAvatar = async () => {
-    console.log(uploadedCroppedImage);
-    await firebase
-      .database()
-      .ref(`users/${user.id}`)
-      .set({
-        name: user.name,
-        email: user.email,
-        id: user.id,
-        avatar: uploadedCroppedImage,
-      })
-      .then(() => {
-        console.log(user.avatar);
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    await firebase.database().ref(`users/${user.id}`).set({
+      name: user.name,
+      email: user.email,
+      id: user.id,
+      avatar: uploadedCroppedImage,
+    });
   };
 
   return (
@@ -83,7 +97,7 @@ export default function Settings(user) {
       <Text style={styles.marginTop}>Avatar:</Text>
       <Avatar
         size="large"
-        onPress={() => handleImage()}
+        onPress={() => pickImage()}
         source={{ uri: croppedImage.uri || user.avatar }}
       >
         <Avatar.Accessory size={20} />
