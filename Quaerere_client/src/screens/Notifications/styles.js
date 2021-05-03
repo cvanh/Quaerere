@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     alignItems: "center",
-    marginRight: "10%",
   },
   user: {
     alignItems: "center",
@@ -12,6 +11,12 @@ export default StyleSheet.create({
   notiheader: {
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: "5%",
   },
+  timestamp:{
+    fontWeight:"bold",
+    paddingLeft:"20%"
+  },
+  message:{
+    fontWeight:"bold",
+  }
 });

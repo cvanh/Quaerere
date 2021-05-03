@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, Button } from "react-native";
 import { Avatar } from "react-native-elements";
 import styles from "./styles.js";
 import firebase from "../../firebase/config.js";
 import { v4 as uuidv4 } from "uuid";
+import { addFriend } from "./Functions/addFriend.js";
+import moment from "moment";
 export default function Notifications(user) {
   const [notifications, setNotifications] = useState([]);
   const [friends, setFriends] = useState([]);
@@ -21,7 +23,6 @@ export default function Notifications(user) {
 
     notiRef.on("value", (snapshot) => {
       snapshot.forEach((snap) => {
-        console.log(snap.val());
         loaded_notification.push(snap.val());
         setNotifications(loaded_notification);
       });
@@ -30,17 +31,62 @@ export default function Notifications(user) {
     await firebase
       .database()
       .ref(`users/${id}/pendingFriends`)
-      .on("value", (snap) => {
-        loaded_friends.push(snap.val());
-        setFriends(loaded_friends);
+      .on("value", (snapshot) => {
+        snapshot.forEach((snap) => {
+          loaded_friends.push(snap.val());
+          setFriends(loaded_friends);
+        });
       });
   };
-  const timeFromNow = timestamp => moment(timestamp).fromNow();
+
+  const handleAdd = async (notification) => {
+    const id = user.id;
+    const notiId = notification.notification.id;
+    console.log(friends);
+    friends.length > 0 &&
+      friends.map((friend) => {
+        console.log(friend);
+        if (friend.id === notiId) {
+          console.log("yes");
+          const newFriend = {
+            id: friend.id,
+            avatar: friend.avatar,
+            name: friend.name,
+            email: friend.email,
+          };
+
+          const userData = {
+            id: user.id,
+            avatar: user.avatar,
+            name: user.name,
+            email: user.email,
+          };
+
+          addFriend(newFriend, userData, friend, id, notiId);
+          alert("accepted friend request");
+        }
+      });
+
+    //This will remove the deleted notification from the array so the overview
+    //updates in real time
+    const array = notifications;
+    let index = array.indexOf(notification);
+
+    if (index > -1) {
+      array.splice(index, 1);
+    }
+
+    let notiToDele = firebase
+      .database()
+      .ref(`notifications/${notification.notification.id}`);
+    await notiToDele.remove();
+  };
+  const timeFromNow = (timestamp) => moment(timestamp).fromNow();
   const displayNotifications = () =>
     notifications.length > 0 &&
     notifications.map((notification) => (
       <>
-        {notification.notification.id === user.id && (
+        {notification.id === user.id && (
           <View key={uuidv4()}>
             <View style={styles.container}>
               <View style={styles.user}>
@@ -52,9 +98,14 @@ export default function Notifications(user) {
                   rounded
                 />
 
-                <Text style={styles.notiheader}>
-                  {notification.notification.name}
+                <Text style={styles.message}>
+                  {notification.notification.message}
                 </Text>
+                <Button
+                  color="green"
+                  onPress={() => handleAdd(notification)}
+                  title="Add friend?"
+                />
               </View>
             </View>
           </View>
