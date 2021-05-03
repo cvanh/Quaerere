@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import Settings from "./screens/Settings/Setting.jsx";
+import Friends from "./screens/Friends/Friends.jsx";
 import { View, Text } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
@@ -61,6 +62,8 @@ export default function App() {
               iconName = focused
                 ? "ios-information-circle"
                 : "ios-information-circle-outline";
+            } else if (route.name === "Friends") {
+              iconName = focused ? "body-outline" : "body-outline";
             } else if (route.name === "Settings") {
               iconName = focused ? "ios-list" : "ios-list";
             }
@@ -74,6 +77,7 @@ export default function App() {
       >
         <Tab.Screen name="Home" children={() => <HomeScreen {...user} />} />
         <Tab.Screen name="Settings" children={() => <Settings {...user} />} />
+        <Tab.Screen name="Friends" children={() => <Friends {...user} />} />
       </Tab.Navigator>
     );
   };

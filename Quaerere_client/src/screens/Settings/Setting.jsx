@@ -64,7 +64,7 @@ export default function Settings(user) {
       xhr.send(null);
     });
     await storageRef
-      .child(uuidv4())
+      .child(`avatars/${uuidv4()}`)
       .put(blob)
       .then((snapshot) => {
         snapshot.ref.getDownloadURL().then((downloadurl) => {
@@ -90,6 +90,7 @@ export default function Settings(user) {
       avatar: uploadedCroppedImage,
     });
     setCroppedImage(null);
+    alert("succesfully changed ur avatar!");
   };
 
   return (
