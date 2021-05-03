@@ -10,6 +10,7 @@ import { View, Text } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
 import firebase from "./firebase/config.js";
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 import Ionicons from "@expo/vector-icons/Ionicons";
 if (!global.btoa) {
   global.btoa = encode;
@@ -18,10 +19,17 @@ if (!global.atob) {
   global.atob = decode;
 }
 
+export default function AppContainer() {
+  return (
+    <AppearanceProvider>
+      <App />
+    </AppearanceProvider>
+  );
+}
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
@@ -82,17 +90,22 @@ export default function App() {
     );
   };
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen name="App" component={HomeTabs} />
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AppearanceProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          {user ? (
+            <Stack.Screen name="App" component={HomeTabs} />
+          ) : (
+            <>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen
+                name="Registration"
+                component={RegistrationScreen}
+              />
+            </>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppearanceProvider>
   );
 }
