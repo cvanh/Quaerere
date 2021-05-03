@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: "15%",
+    marginTop: "5%",
   },
   welcome: {
     fontSize: 18,
