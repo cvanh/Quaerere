@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import Settings from "./screens/Settings/Setting.jsx";
 import Friends from "./screens/Friends/Friends.jsx";
+import Notifications from "./screens/Notifications/Notifications.jsx";
 import { View, Text } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
@@ -63,9 +64,11 @@ export default function App() {
                 ? "ios-information-circle"
                 : "ios-information-circle-outline";
             } else if (route.name === "Friends") {
-              iconName = focused ? "body-outline" : "body-outline";
+              iconName = focused ? "body" : "body-outline";
             } else if (route.name === "Settings") {
-              iconName = focused ? "ios-list" : "ios-list";
+              iconName = focused ? "ios-list" : "ios-list-outline";
+            } else if (route.name === "Notifications") {
+              iconName = focused ? "notifications" : "notifications-outline";
             }
             return <Ionicons name={iconName} size={size} color={color} />;
           },
@@ -76,8 +79,12 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" children={() => <HomeScreen {...user} />} />
-        <Tab.Screen name="Settings" children={() => <Settings {...user} />} />
         <Tab.Screen name="Friends" children={() => <Friends {...user} />} />
+        <Tab.Screen
+          name="Notifications"
+          children={() => <Notifications {...user} />}
+        />
+        <Tab.Screen name="Settings" children={() => <Settings {...user} />} />
       </Tab.Navigator>
     );
   };
