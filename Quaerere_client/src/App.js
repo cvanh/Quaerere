@@ -7,7 +7,7 @@ import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import Settings from "./screens/Settings/Setting.jsx";
 import Friends from "./screens/Friends/Friends.jsx";
 import Notifications from "./screens/Notifications/Notifications.jsx";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
 import firebase from "./firebase/config.js";
@@ -74,7 +74,7 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: "tomato",
+          activeTintColor: "black",
           inactiveTintColor: "gray",
         }}
       >
@@ -90,6 +90,7 @@ export default function App() {
   };
   return (
     <NavigationContainer>
+      <StatusBar barStyle="dark-content" />
       <Stack.Navigator>
         {user ? (
           <Stack.Screen name="App" component={HomeTabs} />
