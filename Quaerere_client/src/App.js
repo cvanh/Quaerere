@@ -6,11 +6,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import Settings from "./screens/Settings/Setting.jsx";
 import Friends from "./screens/Friends/Friends.jsx";
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView, StatusBar} from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
 import { encode, decode } from "base-64";
 import firebase from "./firebase/config.js";
-import { AppearanceProvider, useColorScheme } from "react-native-appearance";
+import {
+  Appearance,
+  AppearanceProvider,
+  useColorScheme,
+} from "react-native-appearance";
 import Ionicons from "@expo/vector-icons/Ionicons";
 if (!global.btoa) {
   global.btoa = encode;
@@ -32,7 +36,7 @@ const Tab = createBottomTabNavigator();
 function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-
+  const [theme, setTheme] = useState(null);
   useEffect(() => {
     const usersRef = firebase.database().ref("users");
     firebase.auth().onAuthStateChanged((user) => {
@@ -42,7 +46,12 @@ function App() {
         setLoading(false);
       }
     });
+    const colorScheme = Appearance.getColorScheme();
+    setTheme(colorScheme);
   }, []);
+
+  //This Section of the code will see what colorscheme the users' device is
+  //using
 
   //This function will look for the users data in the database and make it
   //available throughout our app.
@@ -58,8 +67,7 @@ function App() {
         }
       });
   };
-
-  const HomeTabs = () => {
+  const HomeTabs = (theme) => {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -83,7 +91,10 @@ function App() {
           inactiveTintColor: "gray",
         }}
       >
-        <Tab.Screen name="Home" children={() => <HomeScreen {...user} />} />
+        <Tab.Screen
+          name="Home"
+          children={() => <HomeScreen {...user} theme={theme} />}
+        />
         <Tab.Screen name="Settings" children={() => <Settings {...user} />} />
         <Tab.Screen name="Friends" children={() => <Friends {...user} />} />
       </Tab.Navigator>
@@ -91,10 +102,12 @@ function App() {
   };
   return (
     <AppearanceProvider>
+        <StatusBar barStyle="dark-content"/>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator headerMode="screen"  headerStyle={navigationOptions}
+          >
           {user ? (
-            <Stack.Screen name="App" component={HomeTabs} />
+            <Stack.Screen name="App" children={() => HomeTabs(theme)} />
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />

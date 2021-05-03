@@ -2,12 +2,17 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    marginTop:"25%",
     flex: 1,
     alignItems: "center",
   },
-  boldText:{
-    fontWeight:"bold",
+  darkContainer: {
+    backgroundColor: "#242C40",
+  },
+  darkThemeText: {
+    color: "#D0D0C0",
+  },
+  boldText: {
+    fontWeight: "bold",
   },
   footerView: {
     flex: 1,
