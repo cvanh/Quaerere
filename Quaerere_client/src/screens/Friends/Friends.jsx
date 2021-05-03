@@ -6,7 +6,7 @@ import styles from "./styles";
 import firebase from "../../firebase/config.js";
 export default function Friends(user) {
   const [email, setEmail] = useState("");
-
+  const notiRef = firebase.database().ref("notifications");
   const addFriend = () => {
     firebase
       .database()
@@ -26,7 +26,7 @@ export default function Friends(user) {
               email: user.email,
             };
 
-            friendRequest(newPendingFriend, user, friend);
+            friendRequest(newPendingFriend, user, friend, notiRef);
             alert(`succesfully added ${friend.name} as a friend`);
           }
         });
