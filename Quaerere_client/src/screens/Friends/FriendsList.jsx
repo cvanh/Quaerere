@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
-import Friends from "./Friends.jsx";
 import { Avatar } from "react-native-elements";
 import styles from "./styles.js";
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  Pressable,
+} from "react-native";
+import ModalView from '../../components/Modal/Modal';
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { friendRequest } from "./Functions/friendRequest.js";
 export default function FriendsList(user) {
   const [friendsList, setFriends] = useState([]);
   const [email, setEmail] = useState("");
-
   const notiRef = firebase.database().ref("notifications");
 
   const usersRef = firebase.database().ref("users");
-
+  let modal = false
   useEffect(() => {
     addListeners();
   }, []);
@@ -58,12 +64,18 @@ export default function FriendsList(user) {
   const displayFriends = () =>
     friendsList.length > 0 &&
     friendsList.map((friend) => (
-      <View key={friend.id} style={styles.friendsList}>
-        <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
-        <Text style={styles.friendName}>{friend.name}</Text>
-      </View>
+      <>
+      <TouchableOpacity onPress={() => modal}>
+        <View key={friend.id} style={styles.friendsList}>
+          <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
+          <Text style={styles.friendName}>{friend.name}</Text>
+        </View>
+      </TouchableOpacity>
+        {modal && (
+          <ModalView friend={friend} />
+          )}
+      </>
     ));
-
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -87,6 +99,6 @@ export default function FriendsList(user) {
       ) : (
         <Text style={styles.noFriends}>Your friends will appear here!</Text>
       )}
-    </View>
+          </View>
   );
 }

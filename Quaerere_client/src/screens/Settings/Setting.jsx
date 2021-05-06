@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, Platform, Button } from "react-native";
+import { Text, View, Image, Platform, Button, Alert } from "react-native";
 import styles from "./styles";
 import { Avatar } from "react-native-elements";
 import firebase from "../../firebase/config.js";
@@ -79,7 +79,7 @@ export default function Settings(user) {
     firebase
       .auth()
       .signOut()
-      .then(() => alert("successfully signed out!"));
+      .then(() => Alert.alert("successfully signed out!"));
   };
 
   const changeAvatar = async () => {
