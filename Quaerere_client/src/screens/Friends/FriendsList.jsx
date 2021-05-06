@@ -58,7 +58,7 @@ export default function FriendsList(user) {
   const displayFriends = () =>
     friendsList.length > 0 &&
     friendsList.map((friend) => (
-      <View style={styles.friendsList}>
+      <View key={friend.id} style={styles.friendsList}>
         <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
         <Text style={styles.friendName}>{friend.name}</Text>
       </View>
@@ -82,7 +82,11 @@ export default function FriendsList(user) {
           <Text style={styles.buttonTitle}>Add Friend</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-      {displayFriends()}
-      </View>
+      {friendsList.length > 0 ? (
+        <View>{displayFriends()}</View>
+      ) : (
+        <Text style={styles.noFriends}>Your friends will appear here!</Text>
+      )}
+    </View>
   );
 }

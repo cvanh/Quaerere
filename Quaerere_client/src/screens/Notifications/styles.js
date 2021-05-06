@@ -18,5 +18,10 @@ export default StyleSheet.create({
   },
   message:{
     fontWeight:"bold",
+  },
+  noNotification:{
+    fontWeight:"bold",
+    fontSize:24,
+    marginTop:"50%"
   }
 });
