@@ -87,7 +87,7 @@ export default function Notifications(user) {
     notifications.map((notification) => (
       <>
         {notification.id === user.id && (
-          <View key={uuidv4()}>
+          <View key={notification.id}>
             <View style={styles.container}>
               <View style={styles.user}>
                 <Avatar
