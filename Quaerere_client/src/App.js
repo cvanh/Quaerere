@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen/HomeScreen.jsx";
 import Settings from "./screens/Settings/Setting.jsx";
-import Friends from "./screens/Friends/Friends.jsx";
+import FriendsList from './screens/Friends/FriendsList.jsx'
 import Notifications from "./screens/Notifications/Notifications.jsx";
 import { View, Text, StatusBar } from "react-native";
 import { LoginScreen, RegistrationScreen } from "./screens/Authentication";
@@ -87,7 +87,7 @@ function App() {
         }}
       >
         <Tab.Screen name="Home" children={() => <HomeScreen {...user} />} />
-        <Tab.Screen name="Friends" children={() => <Friends {...user} />} />
+        <Tab.Screen name="Friends" children={() => <FriendsList {...user} />} />
         <Tab.Screen
           name="Notifications"
           children={() => <Notifications {...user} />}

@@ -1,12 +1,35 @@
-import React, { useState } from "react";
-import styles from "./styles";
-import firebase from "../../firebase/config.js";
-// Not in use
-export default function Friends(user) {
+import React, { useState, useEffect } from "react";
+import firebase from "firebase";
+import Friends from "./Friends.jsx";
+import { Avatar } from "react-native-elements";
+import styles from "./styles.js";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { friendRequest } from "./Functions/friendRequest.js";
+export default function FriendsList(user) {
+  const [friendsList, setFriends] = useState([]);
   const [email, setEmail] = useState("");
 
   const notiRef = firebase.database().ref("notifications");
 
+  const usersRef = firebase.database().ref("users");
+
+  useEffect(() => {
+    addListeners();
+  }, []);
+
+  const addListeners = async () => {
+    let loadedF = [];
+    await firebase
+      .database()
+      .ref(`users/${user.id}/friends`)
+      .on("value", (snapshot) => {
+        snapshot.forEach((snap) => {
+          loadedF.push(snap.val());
+          setFriends(loadedF);
+        });
+      });
+  };
   const addFriend = () => {
     firebase
       .database()
@@ -32,11 +55,19 @@ export default function Friends(user) {
         });
       });
   };
+  const displayFriends = () =>
+    friendsList.length > 0 &&
+    friendsList.map((friend) => (
+      <View style={styles.friendsList}>
+        <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
+        <Text style={styles.friendName}>{friend.name}</Text>
+      </View>
+    ));
 
   return (
-    <View >
+    <View style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
         <TextInput
@@ -51,6 +82,7 @@ export default function Friends(user) {
           <Text style={styles.buttonTitle}>Add Friend</Text>
         </TouchableOpacity>
       </KeyboardAwareScrollView>
-    </View>
+      {displayFriends()}
+      </View>
   );
 }

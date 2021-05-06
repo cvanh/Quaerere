@@ -1,10 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
   input: {
     height: 48,
     borderRadius: 5,
@@ -20,7 +16,6 @@ export default StyleSheet.create({
     backgroundColor: "#788eec",
     marginLeft: 30,
     marginRight: 30,
-    marginTop: 20,
     height: 48,
     borderRadius: 5,
     alignItems: "center",
@@ -35,7 +30,6 @@ export default StyleSheet.create({
     fontWeight: "bold",
   },
   footerView: {
-    flex: 1,
     alignItems: "center",
     marginTop: 20,
   },
@@ -47,5 +41,18 @@ export default StyleSheet.create({
     color: "#788eec",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  friendsList: {
+    overflow: "hidden",
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginTop: 30,
+    marginLeft: 20,
+    width: "100%",
+  },
+  friendName: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginLeft: 18,
   },
 });
