@@ -18,3 +18,4 @@ export const createNewUser = (props) => {
         .catch((e) => console.error(e));
     });
 };
+
