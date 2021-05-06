@@ -12,16 +12,16 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  timestamp:{
-    fontWeight:"bold",
-    paddingLeft:"20%"
+  timestamp: {
+    fontWeight: "bold",
+    paddingLeft: "20%",
   },
-  message:{
-    fontWeight:"bold",
+  message: {
+    fontWeight: "bold",
   },
-  noNotification:{
-    fontWeight:"bold",
-    fontSize:24,
-    marginTop:"50%"
-  }
+  noNotification: {
+    fontWeight: "bold",
+    fontSize: 24,
+    marginTop: "50%",
+  },
 });
