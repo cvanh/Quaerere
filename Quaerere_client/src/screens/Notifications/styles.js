@@ -1,27 +1,27 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   user: {
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   notiheader: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   timestamp: {
-    fontWeight: "bold",
-    paddingLeft: "20%",
+    fontWeight: 'bold',
+    paddingLeft: '20%',
   },
   message: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   noNotification: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 24,
-    marginTop: "50%",
+    marginTop: '50%',
   },
 });
