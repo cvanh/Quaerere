@@ -42,7 +42,6 @@ export default function Notifications(user) {
   const handleAdd = async (notification) => {
     const id = user.id;
     const notiId = notification.notification.id;
-    console.log(friends);
     friends.length > 0 &&
       friends.map((friend) => {
         console.log(friend);
@@ -117,6 +116,7 @@ export default function Notifications(user) {
       {notifications.length <= 0 ? (
         <Text style={styles.noNotification}>
           Your notifications will appear here!
+
         </Text>
       ) : (
         <View style={styles.container}>{displayNotifications()}</View>

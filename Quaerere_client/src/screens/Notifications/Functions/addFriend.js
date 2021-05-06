@@ -1,4 +1,4 @@
-import firebase from "../../../firebase/config.js";
+import firebase from '../../../firebase/config.js';
 
 export const addFriend = async (newFriend, userData, friend, id, notiId) => {
   await firebase
@@ -7,7 +7,7 @@ export const addFriend = async (newFriend, userData, friend, id, notiId) => {
     .child(notiId)
     .update(newFriend)
     .then(() => {
-      console.log("friend added");
+      console.log('friend added');
     })
     .catch((e) => {
       console.error(e);
@@ -19,7 +19,7 @@ export const addFriend = async (newFriend, userData, friend, id, notiId) => {
     .child(id)
     .update(userData)
     .then(() => {
-      console.log("updated");
+      console.log('updated');
     })
     .catch((e) => {
       console.error(e);

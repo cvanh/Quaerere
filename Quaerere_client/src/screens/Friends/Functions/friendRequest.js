@@ -1,4 +1,4 @@
-import firebase from "../../../firebase/config.js";
+import firebase from '../../../firebase/config.js';
 
 export const friendRequest = async (newPendingFriend, user, friend, notiRef) => {
   await firebase
@@ -24,6 +24,6 @@ export const friendRequest = async (newPendingFriend, user, friend, notiRef) => 
           message: `${user.name} has added you as a friend.`,
         },
       };
-      notiRef.child(user.id).update(newNotification)
+      notiRef.child(user.id).update(newNotification);
     });
 };

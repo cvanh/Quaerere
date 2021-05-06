@@ -1,4 +1,4 @@
-import firebase from "../../../firebase/config.js";
+import firebase from '../../../firebase/config.js';
 
 export const createNewUser = (props) => {
   firebase
@@ -7,10 +7,10 @@ export const createNewUser = (props) => {
     .then((createdUser) => {
       createdUser.user
         .updateProfile({
-          photoURL:props.photoURL,
+          photoURL: props.photoURL,
           displayName: props.fullName,
-          photoURL:props.photoURL,
-          email:props.email,
+          photoURL: props.photoURL,
+          email: props.email,
         })
         .then(() => {
           props.saveUser(createdUser);
@@ -18,3 +18,4 @@ export const createNewUser = (props) => {
         .catch((e) => console.error(e));
     });
 };
+
