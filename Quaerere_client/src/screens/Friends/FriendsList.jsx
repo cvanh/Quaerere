@@ -10,16 +10,16 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import ModalView from '../../components/Modal/Modal';
+import ModalView from "../../components/Modal/Modal";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { friendRequest } from "./Functions/friendRequest.js";
 export default function FriendsList(user) {
   const [friendsList, setFriends] = useState([]);
   const [email, setEmail] = useState("");
+  const [modal, setModal] = useState(false);
   const notiRef = firebase.database().ref("notifications");
 
   const usersRef = firebase.database().ref("users");
-  let modal = false
   useEffect(() => {
     addListeners();
   }, []);
@@ -36,6 +36,7 @@ export default function FriendsList(user) {
         });
       });
   };
+
   const addFriend = () => {
     firebase
       .database()
@@ -61,21 +62,23 @@ export default function FriendsList(user) {
         });
       });
   };
+
   const displayFriends = () =>
     friendsList.length > 0 &&
     friendsList.map((friend) => (
       <>
-      <TouchableOpacity onPress={() => modal}>
-        <View key={friend.id} style={styles.friendsList}>
-          <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
-          <Text style={styles.friendName}>{friend.name}</Text>
-        </View>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => setModal(true)}>
+          <View key={friend.id} style={styles.friendsList}>
+            <Avatar rounded size="medium" source={{ uri: friend.avatar }} />
+            <Text style={styles.friendName}>{friend.name}</Text>
+          </View>
+        </TouchableOpacity>
         {modal && (
-          <ModalView friend={friend} />
-          )}
+          <ModalView friend={friend} modal={modal} setModal={setModal} />
+        )}
       </>
     ));
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -99,6 +102,6 @@ export default function FriendsList(user) {
       ) : (
         <Text style={styles.noFriends}>Your friends will appear here!</Text>
       )}
-          </View>
+    </View>
   );
 }
